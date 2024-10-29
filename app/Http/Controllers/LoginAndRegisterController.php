@@ -24,12 +24,12 @@ class LoginAndRegisterController extends Controller
                     }
                 }]
             ]);
-            
+
             $user = User::where('email', $res->email)->first();
             // echo Hash::make($res->password);
-           // dd(Hash::check($res->password, $user->password));
+            // dd(Hash::check($res->password, $user->password));
             if ($user && Hash::check($res->password, $user->password)) {
-               // dd(';;;');
+                // dd(';;;');
                 Auth::login($user);
                 $res->session()->regenerate();
 
@@ -67,7 +67,7 @@ class LoginAndRegisterController extends Controller
                     }
                 }],
             ]);
-            
+
             //$pass = md5($validation['password']);
             //dd(md5($validation['password']));
             $user = new User();
@@ -81,13 +81,21 @@ class LoginAndRegisterController extends Controller
         }
         return view('register');
     }
-    public function admin(){
+    public function admin()
+    {
         return view('admin.dashboard');
     }
-    public function librarian(){
+    public function librarian()
+    {
         return view('librarian.dashboard');
     }
-    public function user(){
+    public function user()
+    {
         return view('user.dashboard');
+    }
+    public function logout()
+    {
+        Auth::logout(); // Logs out the user
+        return redirect('/login')->with('success', 'You have been logged out successfully.');
     }
 }
