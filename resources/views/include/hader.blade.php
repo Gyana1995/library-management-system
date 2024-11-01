@@ -52,7 +52,15 @@
             @endif
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a class="nav-link active" href="#">Dashboard</a>
+                    @if(Auth::check() && (Auth::user()->role === '1'))
+                    <a class="nav-link active" href="admin">Dashboard</a>
+                    @endif
+                    @if(Auth::check() && (Auth::user()->role === '2'))
+                    <a class="nav-link active" href="librarian">Dashboard</a>
+                    @endif
+                    @if(Auth::check() && (Auth::user()->role === '3'))
+                    <a class="nav-link active" href="user">Dashboard</a>
+                    @endif
                 </li>
                 @if(Auth::check() && (Auth::user()->role === '1'))
                 <li class="nav-item">
@@ -61,7 +69,7 @@
                 @endif
                 @if(Auth::check() && (Auth::user()->role === '1' || Auth::user()->role === '2'))
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Manage Books</a>
+                    <a class="nav-link" href="book-management">Manage Books</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Available Books</a>
@@ -96,10 +104,4 @@
         <div class="content">
             <header class="d-flex justify-content-between align-items-center mb-4">
                 <h1>Welcome, {{ Auth::user()->name }}</h1>
-                @if(Auth::check() && (Auth::user()->role === '1'))
-                <a href="#" class="btn btn-primary">Add New User</a>
-                @endif
-                @if(Auth::check() && (Auth::user()->role === '2'))
-                <a href="#" class="btn btn-primary">Add New Book</a>
-                @endif
             </header>
